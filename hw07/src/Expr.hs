@@ -86,12 +86,14 @@ eval (Var v) = do
 eval (BinOp op x y) = do
   f <- eval x
   s <- eval y
-  return ((case op of 
+  return (calcBinOp op f s)
+  where 
+  calcBinOp op = case op of 
     Plus -> performOp (+) 
     Minus -> performOp (-) 
     Multiply ->  performOp (*) 
     Divide -> performOpWithCheck checkDivisorIsZero (/)
-    Power -> performOpWithCheck (checkFirstArgIsNegative PowerBaseIsNegative) (**)) f s)
+    Power -> performOpWithCheck (checkFirstArgIsNegative PowerBaseIsNegative) (**)
 eval (UnOp op x) = do
   f <- eval x
   return (case op of

@@ -6,7 +6,7 @@
 module Parser(parseExpression, runParser, Parser(..)) where
 
 import Data.Char ( isAlpha, isAlphaNum, isDigit, digitToInt )
-import Data.Map (fromList, member, Map, (!))
+import Data.Map as M (fromList, member, Map, lookup, (!))
 import Expr (BinaryOperator(..), UnaryOperator(..), Expr(..))
 import Control.Applicative ( Alternative((<|>), empty, many) )
 import GHC.Unicode (isSpace)
@@ -74,6 +74,32 @@ satisfy p = Parser $ \str ->
     _ -> Left "Predicate is not satisfied"
 
 
+binaryOperator :: Parser BinaryOperator
+binaryOperator = Parser $ \str -> 
+  case str of
+    "" -> Left "Expected Binary operator"
+    h:t -> case M.lookup h ops of
+      Just res -> return (t, res)
+      Nothing -> Left ("Unknown binary operator: " ++ [h])
+  where
+    ops = fromList [('+', Plus), ('-', Minus), ('*', Multiply), ('/', Divide), ('^', Power)]
+
+getWord :: String -> String -> Either String (String, String)
+getWord rest@(' ':_) buff = Right (buff, rest)
+getWord (h:t) buff = getWord t (buff ++ [h])
+getWord [] _ = Left "Word can't be empty"
+
+unaryOperator :: Parser UnaryOperator
+unaryOperator = Parser $ \str ->
+  case getWord str "" of 
+    Left err -> Left err
+    Right (h, t) -> case M.lookup h unaryOperators of
+      Just res -> return (t, res)
+      Nothing -> Left ("Unknown unary operator: " ++ h)
+    
+unaryOperators :: Map String UnaryOperator
+unaryOperators = fromList [("sqrt", Square)]
+
 -- Checks if the next character is a space or the end of the input
 satisfyEndOrWhiteSpace :: Parser ()
 satisfyEndOrWhiteSpace = Parser $ \str ->
@@ -86,7 +112,6 @@ parseIdent :: Parser String
 parseIdent = do
     h <- satisfy isAlpha
     t <- go
-    satisfyEndOrWhiteSpace
     let ident = h : t
     if member ident unaryOperators then empty else return ident
   where
@@ -97,41 +122,25 @@ parseIdent = do
       <|>
         return []
 
-binaryOperators :: Map Char BinaryOperator
-binaryOperators = fromList [('+', Plus), ('-', Minus), ('*', Multiply), ('/', Divide), ('^', Power)]
-
 parseBinOp :: Parser (Expr Int)
 parseBinOp = do
-  op <- satisfy (`member` binaryOperators)
+  op <- binaryOperator
   satisfy (== ' ')
   f <- parseExpression
   satisfy (== ' ')
-  BinOp (binaryOperators ! op) f <$> parseExpression
+  BinOp (op) f <$> parseExpression
 
-unaryOperators :: Map String UnaryOperator
-unaryOperators = fromList [("sqrt", Square)]
-
-satisfyUnOp :: Parser String
-satisfyUnOp = Parser $ \str ->
-  go str ""
-  where
-    go rest@(' ':_) buff =
-      if member buff unaryOperators
-        then Right (rest, buff) else Left ("Unknown unary operation: " ++ buff)
-    go (h:t) buff = go t (buff ++ [h])
-    go [] _ = Left "Unary operator can't be empty"
 
 parseUnOp :: Parser (Expr Int)
 parseUnOp = do
-  str <- satisfyUnOp
+  op <- unaryOperator
   satisfy (== ' ')
-  UnOp (unaryOperators ! str) <$> parseExpression
+  UnOp (op) <$> parseExpression
 
 parseInt :: Parser Int
 parseInt = do
   h <- satisfy isDigit
   t <- go
-  satisfyEndOrWhiteSpace
   return (stoi (h:t))
   where
     go = (do
@@ -144,11 +153,15 @@ parseInt = do
 
 parseConst :: Parser (Expr Int)
 parseConst = do
-  Const <$> parseInt
+  val <- parseInt
+  satisfyEndOrWhiteSpace
+  return (Const val)
 
 parseVar :: Parser (Expr Int)
 parseVar = do
-  Var <$> parseIdent
+  ident <- parseIdent
+  satisfyEndOrWhiteSpace
+  return (Var ident)
 
 parseExpression :: Parser (Expr Int)
 parseExpression = do
