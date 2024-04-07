@@ -1,5 +1,5 @@
 {-# LANGUAGE InstanceSigs #-}
-module Expr (BinaryOperator(..), UnaryOperator(..), Expr(..), Error(..), eval, simplify) where
+module Expr (BinaryOperator(..), UnaryOperator(..), Expr(..), Error(..), eval, simplify, getPrefixNotation) where
 import Data.Either (fromLeft)
 import Data.Map.Strict as M ( lookup, Map, empty, fromList)
 import StateDemo (State, get, execState)
@@ -13,13 +13,24 @@ data Expr a = Const a | Var String | BinOp BinaryOperator (Expr a) (Expr a) | Un
 instance (Show a) => Show (Expr a) where
   show :: Expr a -> String
   show (Const x) = show x
-  show (BinOp Plus x y) = "+ " ++ show x ++ " " ++ show y
-  show (BinOp Minus x y) = "- " ++ show x ++ " " ++ show y
-  show (BinOp Multiply x y) = "* " ++ show x ++ " " ++ show y
-  show (BinOp Divide x y) = "/ " ++ show x ++ " " ++ show y
-  show (BinOp Power x y) = "^ " ++ show x ++ " " ++ show y
-  show (UnOp Square x) = "sqrt " ++ show x
+  show (BinOp Plus x y) = "(" ++ show x ++ " + " ++ show y ++ ")"
+  show (BinOp Minus x y) = "(" ++ show x ++ " - " ++ show y ++ ")"
+  show (BinOp Multiply x y) = "(" ++ show x ++ " * " ++ show y ++ ")"
+  show (BinOp Divide x y) = "(" ++ show x ++ " / " ++ show y ++ ")"
+  show (BinOp Power x y) = show x ++ " ^ " ++ show y
+  show (UnOp Square x) = "sqrt(" ++ show x ++ ")"
   show (Var name) = name
+
+
+getPrefixNotation :: (Show a) => Expr a -> String
+getPrefixNotation (Const x) = show x
+getPrefixNotation (BinOp Plus x y) = "+ " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
+getPrefixNotation (BinOp Minus x y) = "- " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
+getPrefixNotation (BinOp Multiply x y) = "* " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
+getPrefixNotation (BinOp Divide x y) = "/ " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
+getPrefixNotation (BinOp Power x y) = "^ " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
+getPrefixNotation (UnOp Square x) = "sqrt " ++ getPrefixNotation x
+getPrefixNotation (Var name) = show name
 
 instance (Num a) => Num (Expr a) where
   (+) :: Expr a -> Expr a -> Expr a

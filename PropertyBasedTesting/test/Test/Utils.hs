@@ -6,6 +6,7 @@ import StateDemo(execState)
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 import Data.Map.Strict as Map(empty, Map, fromList)
+import Parser(runParser, parseExpression)
 
 -- For the simplest types, the generator just picks a random value from the list. 
 genBinaryOperator :: Gen BinaryOperator
@@ -60,3 +61,6 @@ evalExpr expr dict = execState (Expr.eval expr) dict
 
 evalExprNoArgs :: (Show a, Ord a, Floating a) => Expr a -> Either Error a
 evalExprNoArgs expr = evalExpr expr Map.empty
+
+parseExpr :: String -> Either String (String, (Expr Double))
+parseExpr s = runParser parseExpression s

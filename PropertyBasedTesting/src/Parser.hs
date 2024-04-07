@@ -122,7 +122,7 @@ parseIdent = do
       <|>
         return []
 
-parseBinOp :: Parser (Expr Int)
+parseBinOp :: Parser (Expr Double)
 parseBinOp = do
   op <- binaryOperator
   satisfy (== ' ')
@@ -131,7 +131,7 @@ parseBinOp = do
   BinOp (op) f <$> parseExpression
 
 
-parseUnOp :: Parser (Expr Int)
+parseUnOp :: Parser (Expr Double)
 parseUnOp = do
   op <- unaryOperator
   satisfy (== ' ')
@@ -151,18 +151,18 @@ parseInt = do
         return []
     stoi = foldl1 (\a x -> a * 10 + x) . map digitToInt
 
-parseConst :: Parser (Expr Int)
+parseConst :: Parser (Expr Double)
 parseConst = do
   val <- parseInt
   satisfyEndOrWhiteSpace
-  return (Const val)
+  return (Const $ fromIntegral $ val)
 
-parseVar :: Parser (Expr Int)
+parseVar :: Parser (Expr Double)
 parseVar = do
   ident <- parseIdent
   satisfyEndOrWhiteSpace
   return (Var ident)
 
-parseExpression :: Parser (Expr Int)
+parseExpression :: Parser (Expr Double)
 parseExpression = do
   parseBinOp <|> parseUnOp <|> parseVar <|> parseConst
