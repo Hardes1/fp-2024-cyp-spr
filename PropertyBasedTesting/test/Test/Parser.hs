@@ -5,7 +5,8 @@ import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 import Test.Tasty
 import Expr(Expr(..), getPrefixNotation)
-import Test.Utils(genExpr, parseExpr)
+import Util.Generator(genExpr)
+import Util.Parser(parseExpr)
 import Test.Tasty.Hedgehog
 
 parserCompositionShow :: Property

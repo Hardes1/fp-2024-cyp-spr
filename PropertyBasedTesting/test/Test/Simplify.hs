@@ -5,7 +5,8 @@ import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 import Test.Tasty
 import Expr(Expr(..), simplify)
-import Test.Utils(genExpr, genBindnigsToVariables, evalExpr)
+import Util.Generator(genExpr, genBindnigsToVariables)
+import Util.Evaluator(evalExpr)
 import Test.Tasty.Hedgehog
 
 simplifyCompositionEval :: Property

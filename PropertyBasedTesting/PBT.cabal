@@ -58,7 +58,9 @@ test-suite test
   other-modules:
       Test.Parser
       Test.Simplify
-      Test.Utils
+      Util.Evaluator
+      Util.Generator
+      Util.Parser
       Paths_PBT
   hs-source-dirs:
       test
