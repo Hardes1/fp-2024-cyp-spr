@@ -13,12 +13,12 @@ data Expr a = Const a | Var String | BinOp BinaryOperator (Expr a) (Expr a) | Un
 instance (Show a) => Show (Expr a) where
   show :: Expr a -> String
   show (Const x) = show x
-  show (BinOp Plus x y) = "(" ++ show x ++ " + " ++ show y ++ ")"
-  show (BinOp Minus x y) = "(" ++ show x ++ " - " ++ show y ++ ")"
-  show (BinOp Multiply x y) = "(" ++ show x ++ " * " ++ show y ++ ")"
-  show (BinOp Divide x y) = "(" ++ show x ++ " / " ++ show y ++ ")"
-  show (BinOp Power x y) = show x ++ " ^ " ++ show y
-  show (UnOp Square x) = "sqrt(" ++ show x ++ ")"
+  show (BinOp Plus x y) = "+ " ++ show x ++ " " ++ show y
+  show (BinOp Minus x y) = "- " ++ show x ++ " " ++ show y
+  show (BinOp Multiply x y) = "* " ++ show x ++ " " ++ show y
+  show (BinOp Divide x y) = "/ " ++ show x ++ " " ++ show y
+  show (BinOp Power x y) = "^ " ++ show x ++ " " ++ show y
+  show (UnOp Square x) = "sqrt " ++ show x
   show (Var name) = name
 
 instance (Num a) => Num (Expr a) where
