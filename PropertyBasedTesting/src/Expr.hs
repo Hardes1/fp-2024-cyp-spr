@@ -22,15 +22,15 @@ instance (Show a) => Show (Expr a) where
   show (Var name) = name
 
 
-getPrefixNotation :: (Show a) => Expr a -> String
-getPrefixNotation (Const x) = show x
+getPrefixNotation :: (Show a, RealFrac a) => Expr a -> String
+getPrefixNotation (Const x) = show (round x :: Int)
 getPrefixNotation (BinOp Plus x y) = "+ " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
 getPrefixNotation (BinOp Minus x y) = "- " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
 getPrefixNotation (BinOp Multiply x y) = "* " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
 getPrefixNotation (BinOp Divide x y) = "/ " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
 getPrefixNotation (BinOp Power x y) = "^ " ++ getPrefixNotation x ++ " " ++ getPrefixNotation y
 getPrefixNotation (UnOp Square x) = "sqrt " ++ getPrefixNotation x
-getPrefixNotation (Var name) = show name
+getPrefixNotation (Var name) = name
 
 instance (Num a) => Num (Expr a) where
   (+) :: Expr a -> Expr a -> Expr a
@@ -122,9 +122,6 @@ simplifySubtract (Const x) (Const y)
     | x == y = Const 0.0
     | y == 0.0 = Const x
     | otherwise = BinOp Minus (Const x) (Const y)
-simplifySubtract (Var x) (Var y)
-    | x == y = Const 0.0
-    | otherwise = BinOp Minus (Var x) (Var y)
 simplifySubtract x (Const 0.0) = x
 simplifySubtract x y = BinOp Minus x y
 
@@ -132,7 +129,6 @@ simplifySubtract x y = BinOp Minus x y
 chooseMultiplyByZeroSimplification :: Fractional a => Expr a -> Expr a -> Expr a
 chooseMultiplyByZeroSimplification initExpr expr = case expr of
   Const _ -> Const 0.0
-  Var _ -> Const 0.0
   _ -> initExpr
 
 simplifyMultiply :: (Eq a, Fractional a) => Expr a -> Expr a -> Expr a
