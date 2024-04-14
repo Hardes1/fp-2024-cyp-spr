@@ -56,7 +56,8 @@ test-suite test
   type: exitcode-stdio-1.0
   main-is: Test.hs
   other-modules:
-      Test.Parser
+      Test.Eval
+      Test.Parse
       Test.Simplify
       Util.Evaluator
       Util.Generator

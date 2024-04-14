@@ -1,4 +1,4 @@
-module Util.Generator where
+module Util.Generator(genBindnigsToVariables, genExprMixed, genExprOnlyArgs, genExprOnlyNumbers) where
 
 import Hedgehog
 import Expr(Expr(..), BinaryOperator(..), UnaryOperator(..))
@@ -28,25 +28,39 @@ genBindnigsToVariables n = do
     values <- Gen.list (Range.singleton $ length vars) (genDouble n)
     return $ Map.fromList $ (zip vars values)
 
-genExpr :: Int -> Gen (Expr Double)
-genExpr n =
-  Gen.recursive
-    Gen.choice
-    [ 
-      numGen,
-      varGen
-    ]
-    [ 
-     binOpGen,
-     unOpGen 
-    ]
-  where
-    varGen = Expr.Var <$> genVariableName
-    numGen = Const <$> genDouble n
-    binOpGen = do
-      op <- genBinaryOperator
-      Gen.subterm2 (genExpr n) (genExpr n) (BinOp op)
 
-    unOpGen = do
-      op <- genUnaryOperator
-      Gen.subterm (genExpr n) (UnOp op) 
+genExprMixed :: Int -> Gen (Expr Double)
+genExprMixed n = genExpr [varGen, numGen n] (opsGen (genExprMixed n))
+
+genExprOnlyNumbers :: Int -> Gen (Expr Double)
+genExprOnlyNumbers n = genExpr [numGen n] (opsGen (genExprOnlyNumbers n))
+
+genExprOnlyArgs :: Int -> Gen (Expr Double)
+genExprOnlyArgs n = genExpr [varGen] (opsGen (genExprOnlyArgs n))
+
+
+genExpr :: [Gen (Expr Double)] -> [Gen (Expr Double)] -> Gen (Expr Double)
+genExpr term next =
+  Gen.recursive Gen.choice term next
+
+
+varGen :: Gen (Expr Double)
+varGen = Expr.Var <$> genVariableName
+
+
+numGen :: Int -> Gen (Expr Double)
+numGen n = Const <$> genDouble n
+
+
+opsGen :: Gen (Expr Double) -> [Gen (Expr Double)]
+opsGen gen = [binOpGen gen, unOpGen gen]
+
+binOpGen :: Gen (Expr Double) -> Gen (Expr Double)
+binOpGen genEx = do
+      op <- genBinaryOperator
+      Gen.subterm2 genEx genEx (BinOp op)
+  
+unOpGen :: Gen (Expr Double) -> Gen (Expr Double)
+unOpGen genEx = do
+    op <- genUnaryOperator
+    Gen.subterm genEx (UnOp op) 
