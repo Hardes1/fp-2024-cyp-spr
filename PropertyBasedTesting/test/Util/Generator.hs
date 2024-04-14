@@ -26,7 +26,7 @@ genBindnigsToVariables :: Int -> Gen (Map String Double)
 genBindnigsToVariables n = do
     vars <- Gen.subsequence varNames
     values <- Gen.list (Range.singleton $ length vars) (genDouble n)
-    return $ Map.fromList $ (zip vars values)
+    return $ Map.fromList $ zip vars values
 
 
 genExprMixed :: Int -> Gen (Expr Double)
@@ -40,8 +40,7 @@ genExprOnlyArgs n = genExpr [varGen] (opsGen (genExprOnlyArgs n))
 
 
 genExpr :: [Gen (Expr Double)] -> [Gen (Expr Double)] -> Gen (Expr Double)
-genExpr term next =
-  Gen.recursive Gen.choice term next
+genExpr = Gen.recursive Gen.choice
 
 
 varGen :: Gen (Expr Double)

@@ -3,12 +3,12 @@
 {-# HLINT ignore "Use lambda-case" #-}
 {-# OPTIONS_GHC -Wno-unused-do-bind #-}
 {-# HLINT ignore "Evaluate" #-}
-module Parser(parseExpression, runParser, Parser(..)) where
+module Parser(parseExpression, runParser) where
 
 import Data.Char ( isAlpha, isAlphaNum, isDigit, digitToInt )
-import Data.Map as M (fromList, member, Map, lookup, (!))
+import Data.Map as M (fromList, member, Map, lookup)
 import Expr (BinaryOperator(..), UnaryOperator(..), Expr(..))
-import Control.Applicative ( Alternative((<|>), empty, many) )
+import Control.Applicative ( Alternative((<|>), empty) )
 import GHC.Unicode (isSpace)
 
 
@@ -64,7 +64,7 @@ instance Alternative Parser where
   (<|>) l r = Parser $ \str ->
     case runParser l str of
       Right (str', res) -> Right (str', res)
-      Left x -> runParser r str
+      Left _ -> runParser r str
 
 
 satisfy :: (Char -> Bool) -> Parser Char

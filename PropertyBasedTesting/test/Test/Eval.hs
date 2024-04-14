@@ -9,12 +9,12 @@ import Test.Tasty.Hedgehog
 
 evalOnlyVarsWithNoBindings :: Property
 evalOnlyVarsWithNoBindings = property $ do
-  expr <- forAll $ (genExprOnlyArgs 100)
+  expr <- forAll $ genExprOnlyArgs 100
   assert (evalExprNoArgs expr == Left VariableIsUndefined)
 
 evalOnlyNumbers :: Property 
 evalOnlyNumbers = property $ do
-    expr <- forAll $ (genExprOnlyNumbers 100)
+    expr <- forAll $ genExprOnlyNumbers 100
     assert (evalExprNoArgs expr /= Left VariableIsUndefined)
 
 props :: [TestTree]

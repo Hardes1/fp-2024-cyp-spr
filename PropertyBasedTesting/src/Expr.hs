@@ -1,8 +1,8 @@
 {-# LANGUAGE InstanceSigs #-}
 module Expr (BinaryOperator(..), UnaryOperator(..), Expr(..), Error(..), eval, simplify, getPrefixNotation) where
 import Data.Either (fromLeft)
-import Data.Map.Strict as M ( lookup, Map, empty, fromList)
-import StateDemo (State, get, execState)
+import Data.Map.Strict as M ( lookup, Map)
+import StateDemo (State, get)
 
 data BinaryOperator = Plus | Minus | Multiply | Divide | Power deriving (Eq)
 

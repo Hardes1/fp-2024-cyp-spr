@@ -1,11 +1,11 @@
-module Util.Evaluator where
+module Util.Evaluator(evalExpr, evalExprNoArgs) where
 
-import Expr(Expr(..), BinaryOperator(..), UnaryOperator(..), Error, eval)
+import Expr(Expr(..), Error, eval)
 import StateDemo(execState)
 import Data.Map.Strict as Map(Map, empty)
 
-evalExpr :: (Show a, Ord a, Floating a) => Expr a -> Map String a -> Either Error a
-evalExpr expr dict = execState (Expr.eval expr) dict
+evalExpr :: (Ord a, Floating a) =>Expr a -> Map String a -> Either Error a
+evalExpr expr = execState (Expr.eval expr)
 
-evalExprNoArgs :: (Show a, Ord a, Floating a) => Expr a -> Either Error a
+evalExprNoArgs :: (Ord a, Floating a) => Expr a -> Either Error a
 evalExprNoArgs expr = evalExpr expr Map.empty
