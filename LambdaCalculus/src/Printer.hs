@@ -11,7 +11,8 @@ printTerm (Application app@(Application _ _) var@(Variable _)) = printf "%s %s" 
 printTerm (Application lambda@(Lambda _ _) var@(Variable _)) = printf "(%s) %s" (printTerm lambda) (printTerm var)
 printTerm (Application var@(Variable _) app@(Application _ _)) = printf "%s (%s)" (printTerm var) (printTerm app)
 printTerm (Application lambda@(Lambda _ _) app@(Application _ _)) = printf "(%s) %s" (printTerm lambda) (printTerm app)
-printTerm (Application appLe@(Application _ _) appRi@(Application _ _)) = printf "(%s) (%s)" (printTerm appLe) (printTerm appRi)
+printTerm (Application appLe@(Application _ _) appRi@(Application _ _)) = printf "%s (%s)" (printTerm appLe) (printTerm appRi)
+printTerm (Application le@(Lambda _ _) ri@(Lambda _ _)) = printf "(%s) (%s)" (printTerm le) (printTerm ri)
 printTerm (Application rest lambda@(Lambda _ _)) = printf "%s (%s)" (printTerm rest) (printTerm lambda)
 
 

@@ -61,6 +61,7 @@ test-suite LambdaCalculus-test
   main-is: Spec.hs
   other-modules:
       ParserTest
+      PrinterTest
       Utils
       Paths_LambdaCalculus
   autogen-modules:
