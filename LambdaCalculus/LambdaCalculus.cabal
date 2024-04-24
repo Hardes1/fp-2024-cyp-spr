@@ -59,6 +59,8 @@ test-suite LambdaCalculus-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      ParserTest
+      Utils
       Paths_LambdaCalculus
   autogen-modules:
       Paths_LambdaCalculus
@@ -68,5 +70,8 @@ test-suite LambdaCalculus-test
   build-depends:
       LambdaCalculus
     , base >=4.7 && <5
+    , extra
     , parsec >=3.1.16.1
+    , tasty
+    , tasty-hunit
   default-language: Haskell2010

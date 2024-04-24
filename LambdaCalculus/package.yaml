@@ -60,3 +60,6 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - LambdaCalculus
+    - tasty 
+    - tasty-hunit
+    - extra
