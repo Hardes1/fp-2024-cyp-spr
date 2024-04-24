@@ -27,6 +27,7 @@ library
   exposed-modules:
       Lib
       Parser
+      Printer
       Term
   other-modules:
       Paths_LambdaCalculus
