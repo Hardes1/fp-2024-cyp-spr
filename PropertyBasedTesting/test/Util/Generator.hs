@@ -1,4 +1,4 @@
-module Util.Generator(genBindnigsToVariables, genExprMixed, genExprOnlyArgs, genExprOnlyNumbers) where
+module Util.Generator(genBindnigsToVariables, genExprMixed, genExprOnlyArgs, genExprOnlyNumbers, numGen, genExprMixedOnlyPositive) where
 
 import Hedgehog
 import Expr(Expr(..), BinaryOperator(..), UnaryOperator(..))
@@ -8,6 +8,9 @@ import Data.Map.Strict as Map(Map, fromList)
 
 genBinaryOperator :: Gen BinaryOperator
 genBinaryOperator = Gen.element [Plus, Minus, Multiply, Divide, Power]
+
+genPositiveBinaryOperator :: Gen BinaryOperator
+genPositiveBinaryOperator = Gen.element [Plus, Multiply, Divide, Power]
 
 genUnaryOperator :: Gen UnaryOperator
 genUnaryOperator = Gen.element [Square]
@@ -28,6 +31,9 @@ genBindnigsToVariables n = do
     values <- Gen.list (Range.singleton $ length vars) (genDouble n)
     return $ Map.fromList $ zip vars values
 
+
+genExprMixedOnlyPositive :: Int -> Gen (Expr Double)
+genExprMixedOnlyPositive n = genExpr [varGen, numGen n ] (positiveOpsGen (genExprMixedOnlyPositive n))
 
 genExprMixed :: Int -> Gen (Expr Double)
 genExprMixed n = genExpr [varGen, numGen n] (opsGen (genExprMixed n))
@@ -50,16 +56,21 @@ varGen = Expr.Var <$> genVariableName
 numGen :: Int -> Gen (Expr Double)
 numGen n = Const <$> genDouble n
 
+positiveOpsGen :: Gen (Expr Double) -> [Gen (Expr Double)]
+positiveOpsGen gen = [binOpGen gen genPositiveBinaryOperator, unOpGen gen genUnaryOperator]
+
 
 opsGen :: Gen (Expr Double) -> [Gen (Expr Double)]
-opsGen gen = [binOpGen gen, unOpGen gen]
+opsGen gen = [binOpGen gen genBinaryOperator, unOpGen gen genUnaryOperator]
 
-binOpGen :: Gen (Expr Double) -> Gen (Expr Double)
-binOpGen genEx = do
-      op <- genBinaryOperator
+
+
+binOpGen :: Gen (Expr Double) -> Gen BinaryOperator -> Gen (Expr Double)
+binOpGen genEx genOp = do
+      op <- genOp
       Gen.subterm2 genEx genEx (BinOp op)
   
-unOpGen :: Gen (Expr Double) -> Gen (Expr Double)
-unOpGen genEx = do
-    op <- genUnaryOperator
+unOpGen :: Gen (Expr Double) -> Gen UnaryOperator -> Gen (Expr Double)
+unOpGen genEx genOp = do
+    op <- genOp
     Gen.subterm genEx (UnOp op) 
