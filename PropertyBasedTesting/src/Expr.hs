@@ -47,13 +47,14 @@ instance (Num a) => Num (Expr a) where
   negate = BinOp Multiply (Const (-1))
 
 
-data Error = DivisorIsZero | SquareRootIsNegative | PowerBaseIsNegative | VariableIsUndefined deriving Eq
+data Error = DivisorIsZero | SquareRootIsNegative | PowerOpException String | VariableIsUndefined | IllegalState deriving Eq
 instance Show Error where
   show :: Error -> String
   show DivisorIsZero = "Divisor is equal zero"
   show SquareRootIsNegative  = "The root can't be negative"
-  show PowerBaseIsNegative  = "Power base can't be negative"
+  show (PowerOpException s) = "Power operation exception: " ++ s
   show VariableIsUndefined = "Variable is undefined"
+  show IllegalState = "Illegal state error, should not be thrown"
 
 
 performOp :: (a -> a -> a) -> Either Error a -> Either Error a -> Either Error a
@@ -75,13 +76,28 @@ checkDivisorIsZero _ b = case b of
   Right _ -> Nothing
   Left err -> Just err
 
-
-checkFirstArgIsNegative :: (Ord a, Num a) => Error -> Either Error a -> Either Error a -> Maybe Error
-checkFirstArgIsNegative err (Right x) _
+checkSquareRoot ::  (Ord a, Num a) => Error -> Either Error a -> Either Error a -> Maybe Error
+checkSquareRoot err (Right x) (Right _)
   | x < 0 = Just err
   | otherwise = Nothing
 
-checkFirstArgIsNegative err a _ = Just (fromLeft err a)
+checkSquareRoot _ a b = Just ( case a of
+  Left err -> err
+  _ -> fromLeft IllegalState b
+  )
+
+
+
+checkPowerOp :: (Ord a, Num a) => (String -> Error) -> Either Error a -> Either Error a -> Maybe Error
+checkPowerOp err (Right x) (Right y)
+  | x == 0 && y < 0 = Just (err "Can't power zero in negative degree")
+  | x < 0 = Just (err "Power base is negative")
+  | otherwise = Nothing
+
+checkPowerOp _ a b = Just ( case a of
+  Left err -> err
+  _ -> fromLeft IllegalState b
+  )
 
 getVar :: Maybe b -> Either Error b
 getVar value = case value of
@@ -104,11 +120,11 @@ eval (BinOp op x y) = do
     Minus -> performOp (-) 
     Multiply ->  performOp (*) 
     Divide -> performOpWithCheck checkDivisorIsZero (/)
-    Power -> performOpWithCheck (checkFirstArgIsNegative PowerBaseIsNegative) (**)
+    Power -> performOpWithCheck (checkPowerOp PowerOpException) (**)
 eval (UnOp op x) = do
   f <- eval x
   return (case op of
-    Square -> performOpWithCheck (checkFirstArgIsNegative SquareRootIsNegative) (**) f (Right 0.5)
+    Square -> performOpWithCheck (checkSquareRoot SquareRootIsNegative) (**) f (Right 0.5)
     )
 
 
