@@ -72,4 +72,5 @@ satisfy p = Parser $ \str ->
 getWord :: String -> String -> Either String (String, String)
 getWord rest@(' ':_) buff = Right (buff, rest)
 getWord (h:t) buff = getWord t (buff ++ [h])
-getWord [] _ = Left "Word can't be empty"
+getWord [] word@(_:_) = Right (word, [])
+getWord [] [] = Left "Word can't be empty"

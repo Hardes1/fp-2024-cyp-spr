@@ -3,7 +3,7 @@
 {-# HLINT ignore "Use lambda-case" #-}
 {-# OPTIONS_GHC -Wno-unused-do-bind #-}
 {-# HLINT ignore "Evaluate" #-}
-module ExprParser(parseExpression) where
+module ExprParser(parseExpression, parseIdent) where
 
 import Data.Char ( isAlpha, isAlphaNum, isDigit, digitToInt )
 import Data.Map as M (fromList, member, Map, lookup)
