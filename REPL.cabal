@@ -1,18 +1,18 @@
-cabal-version: 1.12
+cabal-version: 2.2
 
 -- This file has been generated from package.yaml by hpack version 0.36.0.
 --
 -- see: https://github.com/sol/hpack
 
-name:           HW11
+name:           REPL
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/kajigor/HW11#readme>
-homepage:       https://github.com/kajigor/HW11#readme
-bug-reports:    https://github.com/kajigor/HW11/issues
-author:         Ekaterina Verbitskaia
-maintainer:     kajigor@gmail.com
-copyright:      Ekaterina Verbitskaia
-license:        BSD3
+description:    Please see the README on GitHub at <https://github.com/githubuser/REPL#readme>
+homepage:       https://github.com/githubuser/REPL#readme
+bug-reports:    https://github.com/githubuser/REPL/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2024 Author name here
+license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
@@ -21,16 +21,19 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/kajigor/HW11
+  location: https://github.com/githubuser/REPL
 
 library
   exposed-modules:
       Expr
+      Interactor
       Parser
       Password
       StateDemo
   other-modules:
-      Paths_HW11
+      Paths_REPL
+  autogen-modules:
+      Paths_REPL
   hs-source-dirs:
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
@@ -40,30 +43,34 @@ library
     , transformers
   default-language: Haskell2010
 
-executable HW11-exe
+executable REPL-exe
   main-is: Main.hs
   other-modules:
-      Paths_HW11
+      Paths_REPL
+  autogen-modules:
+      Paths_REPL
   hs-source-dirs:
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      HW11
+      REPL
     , base >=4.7 && <5
     , containers
     , transformers
   default-language: Haskell2010
 
-test-suite HW11-test
+test-suite REPL-test
   type: exitcode-stdio-1.0
-  main-is: Test.hs
+  main-is: Spec.hs
   other-modules:
-      Paths_HW11
+      Paths_REPL
+  autogen-modules:
+      Paths_REPL
   hs-source-dirs:
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      HW11
+      REPL
     , base >=4.7 && <5
     , containers
     , transformers

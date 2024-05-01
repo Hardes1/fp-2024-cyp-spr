@@ -1,10 +1,10 @@
-name:                HW11
+name:                REPL
 version:             0.1.0.0
-github:              "kajigor/HW11"
-license:             BSD3
-author:              "Ekaterina Verbitskaia"
-maintainer:          "kajigor@gmail.com"
-copyright:           "Ekaterina Verbitskaia"
+github:              "githubuser/REPL"
+license:             BSD-3-Clause
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2024 Author name here"
 
 extra-source-files:
 - README.md
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/kajigor/HW11#readme>
+description:         Please see the README on GitHub at <https://github.com/githubuser/REPL#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -39,7 +39,7 @@ library:
   source-dirs: src
 
 executables:
-  HW11-exe:
+  REPL-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -47,15 +47,15 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - HW11
+    - REPL
 
 tests:
-  HW11-test:
-    main:                Test.hs
+  REPL-test:
+    main:                Spec.hs
     source-dirs:         test
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - HW11
+    - REPL
