@@ -45,7 +45,7 @@ parseEnv = do
     return (Env name)
 
 reportError :: Parser Command
-reportError = Parser $ \s -> Left (printf "Unknown command '%s'!" s)
+reportError = Parser $ \s -> Left (printf "Unknown command '%s'" s)
 
 parseCommmand :: Parser Command
 parseCommmand = parseLet <|> parseEval <|> parseEnv <|> parseQuit <|> reportError
