@@ -1,5 +1,5 @@
 Expr:
-BinOp Plus (Number 1) (Number 2)
+Number 10
 
 Value:
-3
+10

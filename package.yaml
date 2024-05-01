@@ -48,8 +48,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - HW11
-    - optparse-applicative
-    - filepath
 
 tests:
   HW11-test:

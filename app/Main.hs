@@ -1,9 +1,7 @@
 module Main (main) where
-
-import qualified Expr
 import Password
 
-main = Expr.main
+main = undefined
 
 -- main = do
 --   runMaybeT askPassword
