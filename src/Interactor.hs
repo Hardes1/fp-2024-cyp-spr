@@ -1,18 +1,18 @@
-module Interactor(run) where
-    
-import Control.Monad.Trans.Maybe (MaybeT)
-import Control.Monad.Trans.Class (MonadTrans(lift))
+module Interactor(runREPL) where
+import Expr (Expr)
 
-run :: MaybeT IO ()
-run = do
+data Command = Let String (Expr Double) | Eval (Expr Double) | Env (Maybe String) | Quit
+
+
+runREPL :: IO ()
+runREPL = do
     printHelp
+    -- value <- msum $ repeat getPassword
 
 
-
-
-printHelp :: MaybeT IO ()
+printHelp :: IO ()
 printHelp = do
-    lift $ putStrLn ":let <ident> <expr> - set value <expr> to variable <ident>"
-    lift $ putStrLn ":eval <expr> - evaluate expression <expr>"
-    lift $ putStrLn ":env [filename] - print current set variables to stdout or [filename]"
-    lift $ putStrLn ":quit - finish the programm" 
+    putStrLn ":let <ident> <expr> - set value <expr> to variable <ident>"
+    putStrLn ":eval <expr> - evaluate expression <expr>"
+    putStrLn ":env [filename] - print current set variables to stdout or [filename]"
+    putStrLn ":quit - finish the programm" 

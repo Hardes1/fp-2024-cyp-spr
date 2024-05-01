@@ -48,6 +48,8 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - REPL
+    - optparse-applicative
+    - filepath
 
 tests:
   REPL-test:

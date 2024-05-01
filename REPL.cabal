@@ -25,7 +25,10 @@ source-repository head
 
 library
   exposed-modules:
+      Command
+      CommandParser
       Expr
+      ExprParser
       Interactor
       Parser
       Password
@@ -56,6 +59,8 @@ executable REPL-exe
       REPL
     , base >=4.7 && <5
     , containers
+    , filepath
+    , optparse-applicative
     , transformers
   default-language: Haskell2010
 

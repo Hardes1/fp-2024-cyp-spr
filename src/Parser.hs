@@ -3,14 +3,10 @@
 {-# HLINT ignore "Use lambda-case" #-}
 {-# OPTIONS_GHC -Wno-unused-do-bind #-}
 {-# HLINT ignore "Evaluate" #-}
-module Parser(parseExpression, runParser) where
 
-import Data.Char ( isAlpha, isAlphaNum, isDigit, digitToInt )
-import Data.Map as M (fromList, member, Map, lookup)
-import Expr (BinaryOperator(..), UnaryOperator(..), Expr(..))
+module Parser(runParser, satisfy, Parser(..), getWord) where
+
 import Control.Applicative ( Alternative((<|>), empty) )
-import GHC.Unicode (isSpace)
-
 
 -- It's not clear how to compose the parsers above, so people usually use a different abstraction for a parser. 
 -- A parser consumes the prefix of an input String while it's a valid string of the language being parsed. 
@@ -73,96 +69,7 @@ satisfy p = Parser $ \str ->
     (h:t) | p h -> Right (t, h)
     _ -> Left "Predicate is not satisfied"
 
-
-binaryOperator :: Parser BinaryOperator
-binaryOperator = Parser $ \str -> 
-  case str of
-    "" -> Left "Expected Binary operator"
-    h:t -> case M.lookup h ops of
-      Just res -> return (t, res)
-      Nothing -> Left ("Unknown binary operator: " ++ [h])
-  where
-    ops = fromList [('+', Plus), ('-', Minus), ('*', Multiply), ('/', Divide), ('^', Power)]
-
 getWord :: String -> String -> Either String (String, String)
 getWord rest@(' ':_) buff = Right (buff, rest)
 getWord (h:t) buff = getWord t (buff ++ [h])
 getWord [] _ = Left "Word can't be empty"
-
-unaryOperator :: Parser UnaryOperator
-unaryOperator = Parser $ \str ->
-  case getWord str "" of 
-    Left err -> Left err
-    Right (h, t) -> case M.lookup h unaryOperators of
-      Just res -> return (t, res)
-      Nothing -> Left ("Unknown unary operator: " ++ h)
-    
-unaryOperators :: Map String UnaryOperator
-unaryOperators = fromList [("sqrt", Square)]
-
--- Checks if the next character is a space or the end of the input
-satisfyEndOrWhiteSpace :: Parser ()
-satisfyEndOrWhiteSpace = Parser $ \str ->
-  case str of
-    "" -> Right (str, ()) -- End of the string
-    (c:_) | isSpace c -> Right (str, ()) -- Next char is whitespace
-    _ -> Left "Expected space or end of input"
-
-parseIdent :: Parser String
-parseIdent = do
-    h <- satisfy isAlpha
-    t <- go
-    let ident = h : t
-    if member ident unaryOperators then empty else return ident
-  where
-    go = (do
-        x <- satisfy isAlphaNum
-        y <- go
-        return (x : y))
-      <|>
-        return []
-
-parseBinOp :: Parser (Expr Double)
-parseBinOp = do
-  op <- binaryOperator
-  satisfy (== ' ')
-  f <- parseExpression
-  satisfy (== ' ')
-  BinOp (op) f <$> parseExpression
-
-
-parseUnOp :: Parser (Expr Double)
-parseUnOp = do
-  op <- unaryOperator
-  satisfy (== ' ')
-  UnOp (op) <$> parseExpression
-
-parseInt :: Parser Int
-parseInt = do
-  h <- satisfy isDigit
-  t <- go
-  return (stoi (h:t))
-  where
-    go = (do
-        x <- satisfy isDigit
-        y <- go
-        return (x : y))
-      <|>
-        return []
-    stoi = foldl1 (\a x -> a * 10 + x) . map digitToInt
-
-parseConst :: Parser (Expr Double)
-parseConst = do
-  val <- parseInt
-  satisfyEndOrWhiteSpace
-  return (Const $ fromIntegral $ val)
-
-parseVar :: Parser (Expr Double)
-parseVar = do
-  ident <- parseIdent
-  satisfyEndOrWhiteSpace
-  return (Var ident)
-
-parseExpression :: Parser (Expr Double)
-parseExpression = do
-  parseBinOp <|> parseUnOp <|> parseVar <|> parseConst
