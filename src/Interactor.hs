@@ -1,13 +1,33 @@
 module Interactor(runREPL) where
 import Expr (Expr)
-
-data Command = Let String (Expr Double) | Eval (Expr Double) | Env (Maybe String) | Quit
+import Control.Monad (forever)
+import Parser (Parser(runParser))
+import Control.Monad.Trans.Maybe (MaybeT (..))
+import Control.Monad.Trans.Class (MonadTrans(lift))
+import CommandParser (parseCommmand)
+import Command(Command(..))
+import GHC.Base (MonadPlus(mzero))
 
 
 runREPL :: IO ()
-runREPL = do
-    printHelp
-    -- value <- msum $ repeat getPassword
+runREPL = runMaybeT repl >> putStrLn "Exiting REPL..."
+
+repl :: MaybeT IO ()
+repl = forever $ do
+    lift printHelp
+    input <- lift getLine
+    case runParser parseCommmand input of
+        Left err -> lift $ print err
+        Right command -> handleCommand $ snd command
+
+handleCommand :: Command -> MaybeT IO ()
+handleCommand Quit = mzero
+handleCommand (Let ident expr) = lift $ putStrLn ("Setting " ++ ident ++ " to " ++ show expr)
+handleCommand (Eval expr) = lift $ putStrLn ("Evaluating expression: " ++ show expr)
+handleCommand (Env maybeFilename) =
+    case maybeFilename of
+        Nothing -> lift $ putStrLn "Printing environment to stdout"
+        Just filename -> lift $ putStrLn ("Printing environment to file: " ++ filename)
 
 
 printHelp :: IO ()

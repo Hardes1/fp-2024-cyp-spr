@@ -31,7 +31,6 @@ library
       ExprParser
       Interactor
       Parser
-      Password
       StateDemo
   other-modules:
       Paths_REPL

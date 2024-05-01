@@ -5,6 +5,7 @@ import Parser(satisfy, Parser(..), getWord)
 import ExprParser(parseIdent, parseExpression)
 import Command (Command (..))
 import Control.Applicative ((<|>))
+import Text.Printf (printf)
 
 parseKeyword :: String -> Parser ()
 parseKeyword keyword = Parser $ \s ->
@@ -28,6 +29,7 @@ parseLet = do
     parseKeyword ":let"
     satisfy (== ' ')
     ident <- parseIdent
+    satisfy (== ' ')
     Let ident <$> parseExpression
 
 parseEval :: Parser Command
@@ -39,8 +41,11 @@ parseEval = do
 parseEnv :: Parser Command
 parseEnv = do
     parseKeyword ":env"
-    satisfy (== ' ')
-    Env <$> parseFilename
+    name <- (satisfy (== ' ') >> parseFilename) <|> return Nothing
+    return (Env name)
+
+reportError :: Parser Command
+reportError = Parser $ \s -> Left (printf "Unknown command '%s'!" s)
 
 parseCommmand :: Parser Command
-parseCommmand = parseLet <|> parseEval <|> parseEnv <|> parseQuit
+parseCommmand = parseLet <|> parseEval <|> parseEnv <|> parseQuit <|> reportError
