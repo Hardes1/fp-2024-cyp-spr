@@ -5,32 +5,44 @@ import CommandParser (parseCommmand)
 import Command(Command(..))
 import GHC.Base (MonadPlus(mzero))
 import StateDemo(execState)
-import Expr (eval)
-import Data.Map.Strict as Map(empty)
+import Expr (eval, Expr)
+import Data.Map.Strict as Map(empty, Map, insert)
 import Control.Monad.Trans.Maybe (MaybeT(runMaybeT))
 import Control.Monad.Trans.Class (lift)
+import Control.Monad.Trans.State (StateT, get, modify)
+import Control.Monad.Trans.State.Lazy (evalStateT)
+
+
 
 runREPL :: IO ()
-runREPL = runMaybeT repl >> putStrLn "Exiting REPL..."
+runREPL = printHelp >> runMaybeT (evalStateT repl Map.empty) >> putStrLn "Exiting REPL..."
 
-repl :: MaybeT IO ()
+repl :: StateT (Map String Double) (MaybeT IO) ()
 repl = forever $ do
-    lift printHelp
-    input <- lift getLine
+    input <- lift . lift $ getLine
     case runParser parseCommmand input of
-        Left err -> lift $ print err
+        Left err -> lift . lift $ print err
         Right command -> handleCommand $ snd command
 
-handleCommand :: Command -> MaybeT IO ()
+handleCommand :: Command -> StateT (Map String Double) (MaybeT IO) ()
 handleCommand Quit = mzero
-handleCommand (Let ident expr) = lift $ putStrLn ("Setting " ++ ident ++ " to " ++ show expr)
+handleCommand Help = lift . lift $ printHelp
+handleCommand (Let ident expr) = do
+    env <- get
+    let resultState = execState (eval expr) env
+    case resultState of
+        Left err -> lift . lift $ print err
+        Right res -> modify (insert ident res)
+
 handleCommand (Eval expr) = do
-    let resultState = execState (eval expr) Map.empty
-    lift $ putStrLn $ show resultState
-handleCommand (Env maybeFilename) =
+    env <- get
+    let resultState = execState (eval expr) env
+    lift . lift $ print resultState
+handleCommand (Env maybeFilename) = do
+    env <- get
     case maybeFilename of
-        Nothing -> lift $ putStrLn "Printing environment to stdout"
-        Just filename -> lift $ putStrLn ("Printing environment to file: " ++ filename)
+        Nothing -> lift . lift $ print env
+        Just filename -> lift . lift $ writeFile filename (show env)
 
 
 printHelp :: IO ()
@@ -38,4 +50,5 @@ printHelp = do
     putStrLn ":let <ident> <expr> - set value <expr> to variable <ident>"
     putStrLn ":eval <expr> - evaluate expression <expr>"
     putStrLn ":env [filename] - print current set variables to stdout or [filename]"
+    putStrLn ":help - print help"
     putStrLn ":quit - finish the programm"

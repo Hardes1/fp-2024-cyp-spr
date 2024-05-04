@@ -24,6 +24,11 @@ parseQuit = do
     parseKeyword ":quit"
     return Quit
 
+parseHelp :: Parser Command
+parseHelp = do
+    parseKeyword ":help"
+    return Help
+
 parseLet :: Parser Command
 parseLet = do
     parseKeyword ":let"
@@ -48,4 +53,4 @@ reportError :: Parser Command
 reportError = Parser $ \s -> Left (printf "Unknown command '%s'" s)
 
 parseCommmand :: Parser Command
-parseCommmand = parseLet <|> parseEval <|> parseEnv <|> parseQuit <|> reportError
+parseCommmand = parseLet <|> parseEval <|> parseEnv <|> parseQuit <|> parseHelp <|> reportError

@@ -1,4 +1,4 @@
 module Command(Command(..)) where
 import Expr
 
-data Command = Let String (Expr Double) | Eval (Expr Double) | Env (Maybe String) | Quit
+data Command = Let String (Expr Double) | Eval (Expr Double) | Env (Maybe String) | Help | Quit
