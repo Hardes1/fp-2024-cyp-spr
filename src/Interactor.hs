@@ -5,7 +5,7 @@ import CommandParser (parseCommmand)
 import Command(Command(..))
 import GHC.Base (MonadPlus(mzero))
 import StateDemo(execState)
-import Expr (eval, Expr)
+import Expr (eval)
 import Data.Map.Strict as Map(empty, Map, insert, foldlWithKey)
 import Control.Monad.Trans.Maybe (MaybeT(runMaybeT))
 import Control.Monad.Trans.Class (lift)
@@ -38,7 +38,9 @@ handleCommand (Let ident expr) = do
 handleCommand (Eval expr) = do
     env <- get
     let resultState = execState (eval expr) env
-    lift . lift $ print resultState
+    lift . lift $ case resultState of
+        Left err ->  print err
+        Right res -> print res
 handleCommand (Env maybeFilename) = do
     env <- get
     case maybeFilename of

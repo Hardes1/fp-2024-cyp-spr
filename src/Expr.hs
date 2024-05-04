@@ -3,6 +3,7 @@ module Expr (BinaryOperator(..), UnaryOperator(..), Expr(..), Error(..), eval, s
 import Data.Either (fromLeft)
 import Data.Map.Strict as M ( lookup, Map)
 import StateDemo (State, get)
+import Text.Printf (printf)
 
 data BinaryOperator = Plus | Minus | Multiply | Divide | Power deriving (Eq)
 
@@ -47,13 +48,13 @@ instance (Num a) => Num (Expr a) where
   negate = BinOp Multiply (Const (-1))
 
 
-data Error = DivisorIsZero | SquareRootIsNegative | PowerOpException String | VariableIsUndefined | IllegalState deriving Eq
+data Error = DivisorIsZero | SquareRootIsNegative | PowerOpException String | VariableIsUndefined String | IllegalState deriving Eq
 instance Show Error where
   show :: Error -> String
   show DivisorIsZero = "Divisor is equal zero"
   show SquareRootIsNegative  = "The root can't be negative"
   show (PowerOpException s) = "Power operation exception: " ++ s
-  show VariableIsUndefined = "Variable is undefined"
+  show (VariableIsUndefined s) = printf "Variable %s is undefined" s
   show IllegalState = "Illegal state error, should not be thrown"
 
 
@@ -99,26 +100,26 @@ checkPowerOp _ a b = Just ( case a of
   _ -> fromLeft IllegalState b
   )
 
-getVar :: Maybe b -> Either Error b
-getVar value = case value of
+getVar :: String -> Maybe b -> Either Error b
+getVar key value = case value of
   Just x -> Right x
-  _ -> Left VariableIsUndefined
+  _ -> Left (VariableIsUndefined key)
 
 
 eval :: (Ord b, Floating b) => Expr b -> State (Map String b) (Either Error b)
 eval (Const x) = do
   return (Right x)
 eval (Var v) = do
-  getVar . M.lookup v <$> get
+  getVar v . M.lookup v <$> get
 eval (BinOp op x y) = do
   f <- eval x
   s <- eval y
   return (calcBinOp op f s)
-  where 
-  calcBinOp op = case op of 
-    Plus -> performOp (+) 
-    Minus -> performOp (-) 
-    Multiply ->  performOp (*) 
+  where
+  calcBinOp op = case op of
+    Plus -> performOp (+)
+    Minus -> performOp (-)
+    Multiply ->  performOp (*)
     Divide -> performOpWithCheck checkDivisorIsZero (/)
     Power -> performOpWithCheck (checkPowerOp PowerOpException) (**)
 eval (UnOp op x) = do
@@ -134,7 +135,7 @@ simplifyAdd x (Const 0.0) = x
 simplifyAdd x y = BinOp Plus x y
 
 simplifySubtract :: (Eq a, Fractional a) => Expr a -> Expr a -> Expr a
-simplifySubtract (Const x) (Const y) 
+simplifySubtract (Const x) (Const y)
     | x == y = Const 0.0
     | y == 0.0 = Const x
     | otherwise = BinOp Minus (Const x) (Const y)
