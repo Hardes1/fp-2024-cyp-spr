@@ -6,11 +6,12 @@ import Command(Command(..))
 import GHC.Base (MonadPlus(mzero))
 import StateDemo(execState)
 import Expr (eval, Expr)
-import Data.Map.Strict as Map(empty, Map, insert)
+import Data.Map.Strict as Map(empty, Map, insert, foldlWithKey)
 import Control.Monad.Trans.Maybe (MaybeT(runMaybeT))
 import Control.Monad.Trans.Class (lift)
 import Control.Monad.Trans.State (StateT, get, modify)
 import Control.Monad.Trans.State.Lazy (evalStateT)
+import Text.Printf (printf)
 
 
 
@@ -41,9 +42,12 @@ handleCommand (Eval expr) = do
 handleCommand (Env maybeFilename) = do
     env <- get
     case maybeFilename of
-        Nothing -> lift . lift $ print env
-        Just filename -> lift . lift $ writeFile filename (show env)
+        Nothing -> lift . lift $ putStrLn $ getPrintableEnvironment env
+        Just filename -> lift . lift $ writeFile filename $ getPrintableEnvironment env
 
+
+getPrintableEnvironment :: Map String Double -> String
+getPrintableEnvironment = foldlWithKey (\r k v -> r ++ printf "%s: -> %s\n" (show k) (show v)) "Current environment:\n"
 
 printHelp :: IO ()
 printHelp = do
