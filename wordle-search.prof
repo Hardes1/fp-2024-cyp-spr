@@ -1,0 +1,160 @@
+	Wed May  8 22:04 2024 Time and Allocation Profiling Report  (Final)
+
+	   wordle-solver-exe +RTS -N -p -RTS
+
+	total time  =        0.00 secs   (13 ticks @ 1000 us, 8 processors)
+	total alloc =  21,609,856 bytes  (excludes profiling overheads)
+
+COST CENTRE                                           MODULE                    SRC                                              %time %alloc
+
+isWordSatisfyColor                                    Processor.WordProcessor   src/Processor/WordProcessor.hs:(34,1)-(46,106)    23.1   41.0
+isWordSatisfyPattern.letterCount                      Processor.WordProcessor   src/Processor/WordProcessor.hs:17:7-61            15.4   10.5
+printFilteredWords                                    Printer.SearchMenuPrinter src/Printer/SearchMenuPrinter.hs:(26,1)-(30,29)   15.4   15.6
+getWordList                                           Generator.WordGenerator   src/Generator/WordGenerator.hs:(18,1)-(20,26)     15.4   11.1
+MAIN                                                  MAIN                      <built-in>                                         7.7    0.6
+isWordSatisfyPatternInner.isWordSatisfyColorPartially Processor.WordProcessor   src/Processor/WordProcessor.hs:27:7-72             7.7    1.2
+isWordSatisfyColor.go                                 Processor.WordProcessor   src/Processor/WordProcessor.hs:(42,5)-(44,61)      7.7   11.3
+==                                                    Data.GameState            src/Data/GameState.hs:4:51-52                      7.7    5.0
+isWordSatisfyPatternInner                             Processor.WordProcessor   src/Processor/WordProcessor.hs:(26,1)-(31,37)      0.0    1.9
+
+
+                                                                                                                                                                           individual      inherited
+COST CENTRE                                                       MODULE                         SRC                                                   no.      entries  %time %alloc   %time %alloc
+
+MAIN                                                              MAIN                           <built-in>                                             628           0    7.7    0.6   100.0  100.0
+ CAF                                                              GHC.Conc.Signal                <entire-module>                                       1200           0    0.0    0.0     0.0    0.0
+ CAF                                                              GHC.Event.Thread               <entire-module>                                       1185           0    0.0    0.0     0.0    0.0
+ CAF                                                              GHC.IO.Encoding                <entire-module>                                       1166           0    0.0    0.0     0.0    0.0
+ CAF                                                              GHC.IO.Encoding.Iconv          <entire-module>                                       1164           0    0.0    0.0     0.0    0.0
+ CAF                                                              GHC.IO.Exception               <entire-module>                                       1158           0    0.0    0.0     0.0    0.0
+ CAF                                                              GHC.IO.FD                      <entire-module>                                       1157           0    0.0    0.0     0.0    0.0
+ CAF                                                              GHC.IO.Handle.FD               <entire-module>                                       1155           0    0.0    0.2     0.0    0.2
+ CAF                                                              GHC.IO.Handle.Internals        <entire-module>                                       1154           0    0.0    0.0     0.0    0.0
+ CAF:genGuessWord17                                               Generator.WordGenerator        <no location info>                                     993           0    0.0    0.0     0.0    0.0
+  getLaWordList                                                   Generator.WordGenerator        src/Generator/WordGenerator.hs:11:1-45                1295           1    0.0    0.0     0.0    0.0
+   getWordList                                                    Generator.WordGenerator        src/Generator/WordGenerator.hs:(18,1)-(20,26)         1296           1    0.0    0.0     0.0    0.0
+ CAF:genGuessWord_filepath                                        Generator.WordGenerator        src/Generator/WordGenerator.hs:18:13-20                992           0    0.0    0.0     0.0    0.0
+ CAF:isConsistOfLetters1                                          Util.WordUtil                  <no location info>                                     875           0    0.0    0.0     0.0    0.0
+  isConsistOfLetters                                              Util.WordUtil                  src/Util/WordUtil.hs:27:1-32                          1288           1    0.0    0.0     0.0    0.0
+ CAF:lvl23_raKA                                                   Parser.SearchMenuCommandParser <no location info>                                     962           0    0.0    0.0     0.0    0.0
+ CAF:lvl26_raKD                                                   Parser.SearchMenuCommandParser <no location info>                                     963           0    0.0    0.0     0.0    0.0
+ CAF:lvl29_raKG                                                   Parser.SearchMenuCommandParser <no location info>                                     964           0    0.0    0.0     0.0    0.0
+ CAF:lvl32_raKJ                                                   Parser.SearchMenuCommandParser <no location info>                                     965           0    0.0    0.0     0.0    0.0
+ CAF:lvl35_raKM                                                   Parser.SearchMenuCommandParser <no location info>                                     966           0    0.0    0.0     0.0    0.0
+ CAF:lvl4_r7f2                                                    Printer.WordDiffPrinter        <no location info>                                     884           0    0.0    0.0     0.0    0.0
+ CAF:main1                                                        Main                           <no location info>                                    1060           0    0.0    0.0     0.0    0.0
+  main                                                            Main                           app/Main.hs:6:1-10                                    1256           1    0.0    0.0     0.0    0.0
+ CAF:parse10                                                      Parser.MainMenuCommandParser   <no location info>                                     969           0    0.0    0.0     0.0    0.0
+ CAF:parse12                                                      Parser.MainMenuCommandParser   <no location info>                                     970           0    0.0    0.0     0.0    0.0
+ CAF:parse14                                                      Parser.MainMenuCommandParser   <no location info>                                     971           0    0.0    0.0     0.0    0.0
+ CAF:parse6                                                       Parser.MainMenuCommandParser   <no location info>                                     967           0    0.0    0.0     0.0    0.0
+ CAF:parse8                                                       Parser.MainMenuCommandParser   <no location info>                                     968           0    0.0    0.0     0.0    0.0
+ CAF:printBackExtraInfo1                                          Printer.SearchMenuPrinter      <no location info>                                     891           0    0.0    0.0     0.0    0.0
+  printBackExtraInfo                                              Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:33:1-60              1330           1    0.0    0.0     0.0    0.0
+ CAF:printBackExtraInfo2                                          Printer.SearchMenuPrinter      <no location info>                                     890           0    0.0    0.0     0.0    0.0
+ CAF:printExit1                                                   Printer.CommonPrinter          <no location info>                                     943           0    0.0    0.0     0.0    0.0
+  printExit                                                       Printer.CommonPrinter          src/Printer/CommonPrinter.hs:4:1-49                   1332           1    0.0    0.0     0.0    0.0
+ CAF:printExit1                                                   Printer.MainMenuPrinter        <no location info>                                     911           0    0.0    0.0     0.0    0.0
+  printExit                                                       Printer.MainMenuPrinter        src/Printer/MainMenuPrinter.hs:16:1-54                1334           1    0.0    0.0     0.0    0.0
+ CAF:printExit2                                                   Printer.CommonPrinter          <no location info>                                     942           0    0.0    0.0     0.0    0.0
+ CAF:printExit2                                                   Printer.MainMenuPrinter        <no location info>                                     910           0    0.0    0.0     0.0    0.0
+ CAF:printFilteredWords4                                          Printer.SearchMenuPrinter      <no location info>                                     894           0    0.0    0.0     0.0    0.0
+ CAF:printFilteredWords8                                          Printer.SearchMenuPrinter      <no location info>                                     893           0    0.0    0.0     0.0    0.0
+ CAF:printHelp1                                                   Printer.MainMenuPrinter        <no location info>                                     918           0    0.0    0.0     0.0    0.0
+  printHelp                                                       Printer.MainMenuPrinter        src/Printer/MainMenuPrinter.hs:(8,1)-(13,40)          1261           1    0.0    0.0     0.0    0.0
+ CAF:printHelp1                                                   Printer.SearchMenuPrinter      <no location info>                                     905           0    0.0    0.0     0.0    0.0
+  printHelp                                                       Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:(17,1)-(23,47)       1273           1    0.0    0.0     0.0    0.0
+ CAF:printHelp10                                                  Printer.MainMenuPrinter        <no location info>                                     917           0    0.0    0.0     0.0    0.0
+ CAF:printHelp10                                                  Printer.SearchMenuPrinter      <no location info>                                     904           0    0.0    0.0     0.0    0.0
+ CAF:printHelp12                                                  Printer.SearchMenuPrinter      <no location info>                                     899           0    0.0    0.0     0.0    0.0
+  printSearchFormat                                               Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:(11,1)-(14,97)       1275           1    0.0    0.0     0.0    0.0
+ CAF:printHelp2                                                   Printer.MainMenuPrinter        <no location info>                                     913           0    0.0    0.0     0.0    0.0
+ CAF:printHelp2                                                   Printer.SearchMenuPrinter      <no location info>                                     900           0    0.0    0.0     0.0    0.0
+ CAF:printHelp28                                                  Printer.SearchMenuPrinter      <no location info>                                     897           0    0.0    0.0     0.0    0.0
+ CAF:printHelp30                                                  Printer.SearchMenuPrinter      <no location info>                                     898           0    0.0    0.0     0.0    0.0
+ CAF:printHelp4                                                   Printer.MainMenuPrinter        <no location info>                                     914           0    0.0    0.0     0.0    0.0
+ CAF:printHelp4                                                   Printer.SearchMenuPrinter      <no location info>                                     901           0    0.0    0.0     0.0    0.0
+ CAF:printHelp6                                                   Printer.MainMenuPrinter        <no location info>                                     915           0    0.0    0.0     0.0    0.0
+ CAF:printHelp6                                                   Printer.SearchMenuPrinter      <no location info>                                     902           0    0.0    0.0     0.0    0.0
+ CAF:printHelp8                                                   Printer.MainMenuPrinter        <no location info>                                     916           0    0.0    0.0     0.0    0.0
+ CAF:printHelp8                                                   Printer.SearchMenuPrinter      <no location info>                                     903           0    0.0    0.0     0.0    0.0
+ CAF:printWelcomeMessage1                                         Printer.MainMenuPrinter        <no location info>                                     908           0    0.0    0.0     0.0    0.0
+  printWelcomeMessage                                             Printer.MainMenuPrinter        src/Printer/MainMenuPrinter.hs:5:1-62                 1259           1    0.0    0.0     0.0    0.0
+ CAF:printWelcomeMessage1                                         Printer.SearchMenuPrinter      <no location info>                                     888           0    0.0    0.0     0.0    0.0
+  printWelcomeMessage                                             Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:8:1-75               1271           1    0.0    0.0     0.0    0.0
+ CAF:printWelcomeMessage2                                         Printer.MainMenuPrinter        <no location info>                                     907           0    0.0    0.0     0.0    0.0
+ CAF:printWelcomeMessage2                                         Printer.SearchMenuPrinter      <no location info>                                     887           0    0.0    0.0     0.0    0.0
+ CAF:printWordDiffList1                                           Printer.WordDiffPrinter        <no location info>                                     885           0    0.0    0.0     0.0    0.0
+  printWordDiffList                                               Printer.WordDiffPrinter        src/Printer/WordDiffPrinter.hs:15:1-43                1300           1    0.0    0.0     0.0    0.0
+ CAF:run1                                                         Interactor.MainInteractor      <no location info>                                    1065           0    0.0    0.0     0.0    0.0
+  run                                                             Interactor.MainInteractor      app/Interactor/MainInteractor.hs:(14,1)-(17,31)       1257           1    0.0    0.0     0.0    0.0
+ CAF:run2                                                         Interactor.MainInteractor      <no location info>                                    1064           0    0.0    0.0     0.0    0.0
+  loop                                                            Interactor.MainInteractor      app/Interactor/MainInteractor.hs:(20,1)-(24,37)       1263           1    0.0    0.0     0.0    0.0
+ CAF:startSearch1                                                 Interactor.SearchInteractor    <no location info>                                    1068           0    0.0    0.0     0.0    0.0
+  startSearch                                                     Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:(19,1)-(23,13)     1269           1    0.0    0.0     0.0    0.0
+ CAF:startSearch2                                                 Interactor.SearchInteractor    <no location info>                                    1067           0    0.0    0.0     0.0    0.0
+  loop                                                            Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:(26,1)-(31,38)     1279           1    0.0    0.0     0.0    0.0
+ CAF:trim                                                         Util.ParseUtil                 src/Util/ParseUtil.hs:6:1-4                            877           0    0.0    0.0     0.0    0.0
+  trim                                                            Util.ParseUtil                 src/Util/ParseUtil.hs:6:1-47                          1265           1    0.0    0.0     0.0    0.0
+ run                                                              Interactor.MainInteractor      app/Interactor/MainInteractor.hs:(14,1)-(17,31)       1258           0    0.0    0.0    92.3   98.9
+  loop                                                            Interactor.MainInteractor      app/Interactor/MainInteractor.hs:(20,1)-(24,37)       1264           0    0.0    0.0    92.3   98.8
+   handleCommand                                                  Interactor.MainInteractor      app/Interactor/MainInteractor.hs:(27,1)-(31,26)       1268           2    0.0    0.0    92.3   98.8
+    startSearch                                                   Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:(19,1)-(23,13)     1270           0    0.0    0.0    92.3   98.8
+     loop                                                         Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:(26,1)-(31,38)     1280           0    0.0    0.0    92.3   98.7
+      handleCommand                                               Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:(34,1)-(47,9)      1294           3    0.0    0.2    92.3   98.6
+       handleCommand.filteredWordList                             Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:37:9-68            1306           1    0.0    0.0    61.5   71.6
+        getWordsByWordDiffList                                    Processor.WordProcessor        src/Processor/WordProcessor.hs:10:1-100               1307           1    0.0    0.5    61.5   71.6
+         isWordSatisfyPattern                                     Processor.WordProcessor        src/Processor/WordProcessor.hs:(16,1)-(23,20)         1308        2315    0.0    0.3    61.5   71.1
+          isWordSatisfyPattern.\                                  Processor.WordProcessor        src/Processor/WordProcessor.hs:(20,13)-(21,82)        1309        2315    0.0    0.0    46.2   60.4
+           isWordSatisfyPattern.\.wordDiffArr                     Processor.WordProcessor        src/Processor/WordProcessor.hs:20:17-47               1310        2315    0.0    0.0     0.0    0.0
+            diffList                                              Data.GameState                 src/Data/GameState.hs:6:31-38                         1311        2315    0.0    0.0     0.0    0.0
+           isWordSatisfyPatternInner                              Processor.WordProcessor        src/Processor/WordProcessor.hs:(26,1)-(31,37)         1312        2315    0.0    1.9    46.2   60.4
+            isWordSatisfyPatternInner.isWordSatisfyColorPartially Processor.WordProcessor        src/Processor/WordProcessor.hs:27:7-72                1313        2315    7.7    1.2    46.2   58.5
+             isWordSatisfyColor                                   Processor.WordProcessor        src/Processor/WordProcessor.hs:(34,1)-(46,106)        1314       40170   23.1   41.0    38.5   57.3
+              ==                                                  Data.GameState                 src/Data/GameState.hs:4:51-52                         1315       48915    7.7    5.0     7.7    5.0
+              isWordSatisfyColor.go                               Processor.WordProcessor        src/Processor/WordProcessor.hs:(42,5)-(44,61)         1322       10075    7.7   11.3     7.7   11.3
+               ==                                                 Data.GameState                 src/Data/GameState.hs:4:51-52                         1323        8060    0.0    0.0     0.0    0.0
+               isWordSatisfyColor.condOne                         Processor.WordProcessor        src/Processor/WordProcessor.hs:36:7-57                1325        8060    0.0    0.0     0.0    0.0
+                isContainsAtLeastOneLetter                        Processor.WordProcessor        src/Processor/WordProcessor.hs:(70,1)-(72,21)         1326        8060    0.0    0.0     0.0    0.0
+               isWordSatisfyColor.condTwo                         Processor.WordProcessor        src/Processor/WordProcessor.hs:37:7-48                1328        8060    0.0    0.0     0.0    0.0
+                areCharsEqual                                     Processor.WordProcessor        src/Processor/WordProcessor.hs:13:1-42                1329        8060    0.0    0.0     0.0    0.0
+               isWordSatisfyPatternInner.\                        Processor.WordProcessor        src/Processor/WordProcessor.hs:30:77                  1327        8060    0.0    0.0     0.0    0.0
+               isWordSatisfyPatternInner.\                        Processor.WordProcessor        src/Processor/WordProcessor.hs:30:54-65               1324        8060    0.0    0.0     0.0    0.0
+              isWordSatisfyColor.condOne                          Processor.WordProcessor        src/Processor/WordProcessor.hs:36:7-57                1317        2315    0.0    0.0     0.0    0.0
+               isContainsAtLeastOneLetter                         Processor.WordProcessor        src/Processor/WordProcessor.hs:(70,1)-(72,21)         1318        2315    0.0    0.0     0.0    0.0
+              isWordSatisfyPatternInner.\                         Processor.WordProcessor        src/Processor/WordProcessor.hs:30:54-65               1316        2315    0.0    0.0     0.0    0.0
+              isWordSatisfyColor.condTwo                          Processor.WordProcessor        src/Processor/WordProcessor.hs:37:7-48                1320        2015    0.0    0.0     0.0    0.0
+               areCharsEqual                                      Processor.WordProcessor        src/Processor/WordProcessor.hs:13:1-42                1321        2015    0.0    0.0     0.0    0.0
+          isWordSatisfyPattern.letterCount                        Processor.WordProcessor        src/Processor/WordProcessor.hs:17:7-61                1319        2315   15.4   10.5    15.4   10.5
+       printFilteredWords                                         Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:(26,1)-(30,29)       1299           1   15.4   15.6    15.4   15.7
+        printWordDiffList                                         Printer.WordDiffPrinter        src/Printer/WordDiffPrinter.hs:15:1-43                1301           0    0.0    0.0     0.0    0.0
+         printWordDiff                                            Printer.WordDiffPrinter        src/Printer/WordDiffPrinter.hs:(7,1)-(12,16)          1302           1    0.0    0.0     0.0    0.0
+          printWordDiff.\                                         Printer.WordDiffPrinter        src/Printer/WordDiffPrinter.hs:(8,34)-(11,66)         1305           5    0.0    0.0     0.0    0.0
+       getLaWordList                                              Generator.WordGenerator        src/Generator/WordGenerator.hs:11:1-45                1297           0    0.0    0.0    15.4   11.1
+        getWordList                                               Generator.WordGenerator        src/Generator/WordGenerator.hs:(18,1)-(20,26)         1298           0   15.4   11.1    15.4   11.1
+       printBackExtraInfo                                         Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:33:1-60              1331           0    0.0    0.0     0.0    0.0
+      loop.parseResult                                            Interactor.SearchInteractor    app/Interactor/SearchInteractor.hs:28:9-40            1281           3    0.0    0.0     0.0    0.0
+       parse                                                      Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(24,1)-(41,68)  1283           3    0.0    0.0     0.0    0.0
+        getWordAndColor                                           Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(45,1)-(46,62)  1284           1    0.0    0.0     0.0    0.0
+        isCorrectColorList                                        Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(55,1)-(58,25)  1290           1    0.0    0.0     0.0    0.0
+         isConsistsOfOnlyAllowedColors                            Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(61,1)-(65,39)  1292           6    0.0    0.0     0.0    0.0
+          isConsistsOfOnlyAllowedColors.lchr                      Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:64:5-22         1293           5    0.0    0.0     0.0    0.0
+         isValidLength                                            Util.WordUtil                  src/Util/WordUtil.hs:30:1-37                          1291           1    0.0    0.0     0.0    0.0
+        isCorrectWord                                             Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(49,1)-(52,25)  1286           1    0.0    0.0     0.0    0.0
+         isValidLength                                            Util.WordUtil                  src/Util/WordUtil.hs:30:1-37                          1287           1    0.0    0.0     0.0    0.0
+         isConsistOfLetters                                       Util.WordUtil                  src/Util/WordUtil.hs:27:1-32                          1289           0    0.0    0.0     0.0    0.0
+        parse.combineWords                                        Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(36,5)-(41,68)  1303           1    0.0    0.0     0.0    0.0
+         parse.combineWords.\                                     Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:(37,10)-(41,67) 1304           5    0.0    0.0     0.0    0.0
+        parse.wordList                                            Parser.SearchMenuCommandParser src/Parser/SearchMenuCommandParser.hs:31:7-28         1285           1    0.0    0.0     0.0    0.0
+       trim                                                       Util.ParseUtil                 src/Util/ParseUtil.hs:6:1-47                          1282           0    0.0    0.0     0.0    0.0
+     printExit                                                    Printer.CommonPrinter          src/Printer/CommonPrinter.hs:4:1-49                   1333           0    0.0    0.0     0.0    0.0
+     printHelp                                                    Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:(17,1)-(23,47)       1274           0    0.0    0.0     0.0    0.1
+      printSearchFormat                                           Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:(11,1)-(14,97)       1276           0    0.0    0.0     0.0    0.1
+       printWordDiff                                              Printer.WordDiffPrinter        src/Printer/WordDiffPrinter.hs:(7,1)-(12,16)          1277           1    0.0    0.0     0.0    0.0
+        printWordDiff.\                                           Printer.WordDiffPrinter        src/Printer/WordDiffPrinter.hs:(8,34)-(11,66)         1278           5    0.0    0.0     0.0    0.0
+     printWelcomeMessage                                          Printer.SearchMenuPrinter      src/Printer/SearchMenuPrinter.hs:8:1-75               1272           0    0.0    0.0     0.0    0.0
+   parse                                                          Parser.MainMenuCommandParser   src/Parser/MainMenuCommandParser.hs:(6,1)-(11,17)     1267           2    0.0    0.0     0.0    0.0
+   trim                                                           Util.ParseUtil                 src/Util/ParseUtil.hs:6:1-47                          1266           0    0.0    0.0     0.0    0.0
+  printExit                                                       Printer.MainMenuPrinter        src/Printer/MainMenuPrinter.hs:16:1-54                1335           0    0.0    0.0     0.0    0.0
+  printHelp                                                       Printer.MainMenuPrinter        src/Printer/MainMenuPrinter.hs:(8,1)-(13,40)          1262           0    0.0    0.0     0.0    0.0
+  printWelcomeMessage                                             Printer.MainMenuPrinter        src/Printer/MainMenuPrinter.hs:5:1-62                 1260           0    0.0    0.0     0.0    0.0
