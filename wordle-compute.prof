@@ -1,0 +1,177 @@
+	Sun May 12 14:10 2024 Time and Allocation Profiling Report  (Final)
+
+	   wordle-solver-exe +RTS -N -p -RTS
+
+	total time  =        0.02 secs   (87 ticks @ 1000 us, 8 processors)
+	total alloc = 169,945,296 bytes  (excludes profiling overheads)
+
+COST CENTRE                     MODULE                  SRC                                              %time %alloc
+
+getColorCountForWordDiff        Processor.WordProcessor src/Processor/WordProcessor.hs:(43,1)-(44,95)     26.4   22.0
+calculateDiffInner              Processor.WordProcessor src/Processor/WordProcessor.hs:(90,1)-(102,88)    16.1   23.4
+calculateDiff.letterCount       Processor.WordProcessor src/Processor/WordProcessor.hs:86:7-106           16.1   21.4
+getColorCountForDict.\          Processor.WordProcessor src/Processor/WordProcessor.hs:32:5-52             8.0    4.8
+calculateDiff.actualTransformed Processor.WordProcessor src/Processor/WordProcessor.hs:85:7-44             5.7   11.9
+compareWords                    Processor.WordProcessor src/Processor/WordProcessor.hs:(21,1)-(26,23)      3.4    0.2
+calculateDiffInner.lst          Processor.WordProcessor src/Processor/WordProcessor.hs:93:7-19             3.4    0.0
+getWordList                     Generator.WordGenerator src/Generator/WordGenerator.hs:(18,1)-(20,26)      3.4    7.9
+isContainsAtLeastOneLetter      Processor.WordProcessor src/Processor/WordProcessor.hs:(105,1)-(107,21)    2.3    0.2
+compareWords.scoreMap.\         Processor.WordProcessor src/Processor/WordProcessor.hs:23:41-92            2.3    0.7
+compareWords.scoreMap           Processor.WordProcessor src/Processor/WordProcessor.hs:23:7-116            2.3    1.6
+calculateDiffInner.cnt          Processor.WordProcessor src/Processor/WordProcessor.hs:92:7-19             2.3    0.0
+MAIN                            MAIN                    <built-in>                                         1.1    0.1
+areCharsEqual                   Util.WordUtil           src/Util/WordUtil.hs:34:1-42                       1.1    0.0
+getWordDiffListByWords          Processor.WordProcessor src/Processor/WordProcessor.hs:37:1-54             1.1    2.4
+findBestWord.transformedWords.\ Processor.WordProcessor src/Processor/WordProcessor.hs:12:45-97            1.1    0.0
+findBestWord.transformedWords   Processor.WordProcessor src/Processor/WordProcessor.hs:12:7-109            1.1    1.1
+calculateDiff                   Processor.WordProcessor src/Processor/WordProcessor.hs:(84,1)-(87,81)      1.1    1.3
+compare                         Data.GameState          src/Data/GameState.hs:4:45-47                      1.1    0.7
+
+
+                                                                                                                                                         individual      inherited
+COST CENTRE                                    MODULE                          SRC                                                   no.      entries  %time %alloc   %time %alloc
+
+MAIN                                           MAIN                            <built-in>                                             668           0    1.1    0.1   100.0  100.0
+ CAF                                           GHC.Conc.Signal                 <entire-module>                                       1280           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.Event.Thread                <entire-module>                                       1265           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.IO.Encoding                 <entire-module>                                       1246           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.IO.Encoding.Iconv           <entire-module>                                       1244           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.IO.Exception                <entire-module>                                       1238           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.IO.FD                       <entire-module>                                       1237           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.IO.Handle.FD                <entire-module>                                       1235           0    0.0    0.0     0.0    0.0
+ CAF                                           GHC.IO.Handle.Internals         <entire-module>                                       1234           0    0.0    0.0     0.0    0.0
+ CAF:genGuessWord17                            Generator.WordGenerator         <no location info>                                    1055           0    0.0    0.0     0.0    0.0
+  getLaWordList                                Generator.WordGenerator         src/Generator/WordGenerator.hs:11:1-45                1365           1    0.0    0.0     0.0    0.0
+   getWordList                                 Generator.WordGenerator         src/Generator/WordGenerator.hs:(18,1)-(20,26)         1366           1    0.0    0.0     0.0    0.0
+ CAF:genGuessWord_filepath                     Generator.WordGenerator         src/Generator/WordGenerator.hs:18:13-20               1054           0    0.0    0.0     0.0    0.0
+ CAF:getEmptyCountColorMap                     Processor.WordProcessor         src/Processor/WordProcessor.hs:40:1-21                 933           0    0.0    0.0     0.0    0.0
+  getEmptyCountColorMap                        Processor.WordProcessor         src/Processor/WordProcessor.hs:40:1-72                1385           1    0.0    0.0     0.0    0.0
+   compare                                     Data.GameState                  src/Data/GameState.hs:4:45-47                         1388           3    0.0    0.0     0.0    0.0
+   >=                                          Data.GameState                  src/Data/GameState.hs:4:45-47                         1386           1    0.0    0.0     0.0    0.0
+    <                                          Data.GameState                  src/Data/GameState.hs:4:45-47                         1387           1    0.0    0.0     0.0    0.0
+ CAF:getTaWordList1                            Generator.WordGenerator         <no location info>                                    1052           0    0.0    0.0     0.0    0.0
+  getTaWordList                                Generator.WordGenerator         src/Generator/WordGenerator.hs:15:1-45                1369           1    0.0    0.0     0.0    0.0
+   getWordList                                 Generator.WordGenerator         src/Generator/WordGenerator.hs:(18,1)-(20,26)         1370           1    0.0    0.0     0.0    0.0
+ CAF:getTaWordList_filepath                    Generator.WordGenerator         src/Generator/WordGenerator.hs:18:13-20               1051           0    0.0    0.0     0.0    0.0
+ CAF:isConsistOfLetters1                       Util.WordUtil                   <no location info>                                     923           0    0.0    0.0     0.0    0.0
+  isConsistOfLetters                           Util.WordUtil                   src/Util/WordUtil.hs:28:1-32                          1361           1    0.0    0.0     0.0    0.0
+ CAF:lvl1_r2AF                                 Interactor.ComputeInteractor    <no location info>                                    1153           0    0.0    0.0     0.0    0.0
+ CAF:lvl4_r5dQ                                 Printer.WordDiffPrinter         <no location info>                                     935           0    0.0    0.0     0.0    0.0
+ CAF:main1                                     Main                            <no location info>                                    1129           0    0.0    0.0     0.0    0.0
+  main                                         Main                            app/Main.hs:6:1-10                                    1336           1    0.0    0.0     0.0    0.0
+ CAF:parse10                                   Parser.MainMenuCommandParser    <no location info>                                    1022           0    0.0    0.0     0.0    0.0
+ CAF:parse12                                   Parser.MainMenuCommandParser    <no location info>                                    1023           0    0.0    0.0     0.0    0.0
+ CAF:parse14                                   Parser.ComputeMenuCommandParser <no location info>                                    1042           0    0.0    0.0     0.0    0.0
+ CAF:parse14                                   Parser.MainMenuCommandParser    <no location info>                                    1024           0    0.0    0.0     0.0    0.0
+ CAF:parse16                                   Parser.ComputeMenuCommandParser <no location info>                                    1043           0    0.0    0.0     0.0    0.0
+ CAF:parse18                                   Parser.ComputeMenuCommandParser <no location info>                                    1044           0    0.0    0.0     0.0    0.0
+ CAF:parse20                                   Parser.ComputeMenuCommandParser <no location info>                                    1045           0    0.0    0.0     0.0    0.0
+ CAF:parse22                                   Parser.ComputeMenuCommandParser <no location info>                                    1046           0    0.0    0.0     0.0    0.0
+ CAF:parse8                                    Parser.MainMenuCommandParser    <no location info>                                    1021           0    0.0    0.0     0.0    0.0
+ CAF:printComputeResult2                       Printer.ComputeMenuPrinter      <no location info>                                     995           0    0.0    0.0     0.0    0.0
+ CAF:printComputeResult4                       Printer.ComputeMenuPrinter      <no location info>                                     996           0    0.0    0.0     0.0    0.0
+ CAF:printExit1                                Printer.CommonPrinter           <no location info>                                     998           0    0.0    0.0     0.0    0.0
+  printExit                                    Printer.CommonPrinter           src/Printer/CommonPrinter.hs:7:1-49                   1420           1    0.0    0.0     0.0    0.0
+ CAF:printExit1                                Printer.MainMenuPrinter         <no location info>                                     957           0    0.0    0.0     0.0    0.0
+  printExit                                    Printer.MainMenuPrinter         src/Printer/MainMenuPrinter.hs:16:1-54                1422           1    0.0    0.0     0.0    0.0
+ CAF:printExit2                                Printer.CommonPrinter           <no location info>                                     997           0    0.0    0.0     0.0    0.0
+ CAF:printExit2                                Printer.MainMenuPrinter         <no location info>                                     956           0    0.0    0.0     0.0    0.0
+ CAF:printHelp1                                Printer.ComputeMenuPrinter      <no location info>                                     992           0    0.0    0.0     0.0    0.0
+  printHelp                                    Printer.ComputeMenuPrinter      src/Printer/ComputeMenuPrinter.hs:(9,1)-(15,47)       1352           1    0.0    0.0     0.0    0.0
+ CAF:printHelp1                                Printer.MainMenuPrinter         <no location info>                                     964           0    0.0    0.0     0.0    0.0
+  printHelp                                    Printer.MainMenuPrinter         src/Printer/MainMenuPrinter.hs:(8,1)-(13,40)          1341           1    0.0    0.0     0.0    0.0
+ CAF:printHelp10                               Printer.ComputeMenuPrinter      <no location info>                                     990           0    0.0    0.0     0.0    0.0
+ CAF:printHelp10                               Printer.MainMenuPrinter         <no location info>                                     963           0    0.0    0.0     0.0    0.0
+ CAF:printHelp12                               Printer.ComputeMenuPrinter      <no location info>                                     991           0    0.0    0.0     0.0    0.0
+ CAF:printHelp2                                Printer.ComputeMenuPrinter      <no location info>                                     986           0    0.0    0.0     0.0    0.0
+ CAF:printHelp2                                Printer.MainMenuPrinter         <no location info>                                     959           0    0.0    0.0     0.0    0.0
+ CAF:printHelp4                                Printer.ComputeMenuPrinter      <no location info>                                     987           0    0.0    0.0     0.0    0.0
+ CAF:printHelp4                                Printer.MainMenuPrinter         <no location info>                                     960           0    0.0    0.0     0.0    0.0
+ CAF:printHelp6                                Printer.ComputeMenuPrinter      <no location info>                                     988           0    0.0    0.0     0.0    0.0
+ CAF:printHelp6                                Printer.MainMenuPrinter         <no location info>                                     961           0    0.0    0.0     0.0    0.0
+ CAF:printHelp8                                Printer.ComputeMenuPrinter      <no location info>                                     989           0    0.0    0.0     0.0    0.0
+ CAF:printHelp8                                Printer.MainMenuPrinter         <no location info>                                     962           0    0.0    0.0     0.0    0.0
+ CAF:printWelcomeMessage1                      Printer.MainMenuPrinter         <no location info>                                     954           0    0.0    0.0     0.0    0.0
+  printWelcomeMessage                          Printer.MainMenuPrinter         src/Printer/MainMenuPrinter.hs:5:1-62                 1339           1    0.0    0.0     0.0    0.0
+ CAF:printWelcomeMessage2                      Printer.MainMenuPrinter         <no location info>                                     953           0    0.0    0.0     0.0    0.0
+ CAF:printWordDiffList1                        Printer.WordDiffPrinter         <no location info>                                     936           0    0.0    0.0     0.0    0.0
+  printWordDiffList                            Printer.WordDiffPrinter         src/Printer/WordDiffPrinter.hs:15:1-43                1406           1    0.0    0.0     0.0    0.0
+ CAF:run1                                      Interactor.MainInteractor       <no location info>                                    1133           0    0.0    0.0     0.0    0.0
+  run                                          Interactor.MainInteractor       app/Interactor/MainInteractor.hs:(15,1)-(18,31)       1337           1    0.0    0.0     0.0    0.0
+ CAF:run2                                      Interactor.MainInteractor       <no location info>                                    1132           0    0.0    0.0     0.0    0.0
+  loop                                         Interactor.MainInteractor       app/Interactor/MainInteractor.hs:(21,1)-(25,37)       1343           1    0.0    0.0     0.0    0.0
+ CAF:startCompute1                             Interactor.ComputeInteractor    <no location info>                                    1158           0    0.0    0.0     0.0    0.0
+  startCompute                                 Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:(17,1)-(21,13)    1349           1    0.0    0.0     0.0    0.0
+ CAF:startCompute2                             Interactor.ComputeInteractor    <no location info>                                    1156           0    0.0    0.0     0.0    0.0
+  loop                                         Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:(24,1)-(29,38)    1354           1    0.0    0.0     0.0    0.0
+ CAF:startCompute4                             Interactor.ComputeInteractor    <no location info>                                    1157           0    0.0    0.0     0.0    0.0
+ CAF:trim                                      Util.ParseUtil                  src/Util/ParseUtil.hs:9:1-4                            925           0    0.0    0.0     0.0    0.0
+  trim                                         Util.ParseUtil                  src/Util/ParseUtil.hs:9:1-47                          1345           1    0.0    0.0     0.0    0.0
+ CAF:z_r5VE                                    Printer.ComputeMenuPrinter      <no location info>                                     994           0    0.0    0.0     0.0    0.0
+ run                                           Interactor.MainInteractor       app/Interactor/MainInteractor.hs:(15,1)-(18,31)       1338           0    0.0    0.0    98.9   99.9
+  loop                                         Interactor.MainInteractor       app/Interactor/MainInteractor.hs:(21,1)-(25,37)       1344           0    0.0    0.0    98.9   99.9
+   handleCommand                               Interactor.MainInteractor       app/Interactor/MainInteractor.hs:(28,1)-(32,26)       1348           2    0.0    0.0    98.9   99.8
+    startCompute                               Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:(17,1)-(21,13)    1350           0    0.0    0.0    98.9   99.8
+     printWelcomeMessage                       Printer.CommonPrinter           src/Printer/CommonPrinter.hs:4:1-72                   1351           1    0.0    0.0     0.0    0.0
+     loop                                      Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:(24,1)-(29,38)    1355           0    0.0    0.0    98.9   99.8
+      handleCommand                            Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:(32,1)-(54,44)    1363           5    0.0    0.0    98.9   99.8
+       printNewWord                            Printer.ComputeMenuPrinter      src/Printer/ComputeMenuPrinter.hs:(29,1)-(30,82)      1364           3    0.0    0.0     0.0    0.0
+       getWordDiffListByWords                  Processor.WordProcessor         src/Processor/WordProcessor.hs:37:1-54                1408           1    0.0    0.0     0.0    0.0
+        calculateDiff                          Processor.WordProcessor         src/Processor/WordProcessor.hs:(84,1)-(87,81)         1410           3    0.0    0.0     0.0    0.0
+         calculateDiffInner                    Processor.WordProcessor         src/Processor/WordProcessor.hs:(90,1)-(102,88)        1412          18    0.0    0.0     0.0    0.0
+          calculateDiffInner.lst               Processor.WordProcessor         src/Processor/WordProcessor.hs:93:7-19                1417          15    0.0    0.0     0.0    0.0
+          calculateDiffInner.cnt               Processor.WordProcessor         src/Processor/WordProcessor.hs:92:7-19                1414          14    0.0    0.0     0.0    0.0
+          isContainsAtLeastOneLetter           Processor.WordProcessor         src/Processor/WordProcessor.hs:(105,1)-(107,21)       1413           9    0.0    0.0     0.0    0.0
+         calculateDiff.actualTransformed       Processor.WordProcessor         src/Processor/WordProcessor.hs:85:7-44                1411           3    0.0    0.0     0.0    0.0
+         calculateDiff.letterCount             Processor.WordProcessor         src/Processor/WordProcessor.hs:86:7-106               1415           3    0.0    0.0     0.0    0.0
+          areCharsEqual                        Util.WordUtil                   src/Util/WordUtil.hs:34:1-42                          1416          15    0.0    0.0     0.0    0.0
+       handleCommand.allPossibleWords          Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:42:9-43           1378           1    0.0    0.1     0.0    0.1
+       handleCommand.bestWord                  Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:43:9-52           1373           1    0.0    0.0    95.4   91.9
+        findBestWord                           Processor.WordProcessor         src/Processor/WordProcessor.hs:(11,1)-(17,16)         1374           1    0.0    0.0    95.4   91.9
+         findBestWord.\                        Processor.WordProcessor         src/Processor/WordProcessor.hs:15:5-43                1380       12972    0.0    0.2     8.0    3.5
+          compareWords                         Processor.WordProcessor         src/Processor/WordProcessor.hs:(21,1)-(26,23)         1381       12972    3.4    0.2     8.0    3.3
+           compareWords.scoreMap               Processor.WordProcessor         src/Processor/WordProcessor.hs:23:7-116               1402       25944    2.3    1.6     4.6    3.1
+            compareWords.scoreMap.\            Processor.WordProcessor         src/Processor/WordProcessor.hs:23:41-92               1403       77832    2.3    0.7     2.3    1.5
+             compare                           Data.GameState                  src/Data/GameState.hs:4:45-47                         1404      129720    0.0    0.7     0.0    0.7
+             compareWords.weight               Processor.WordProcessor         src/Processor/WordProcessor.hs:(24,7)-(26,23)         1405       77832    0.0    0.0     0.0    0.0
+         findBestWord.h                        Processor.WordProcessor         src/Processor/WordProcessor.hs:13:7-31                1376           1    0.0    0.0     0.0    0.0
+         findBestWord.transformedWords         Processor.WordProcessor         src/Processor/WordProcessor.hs:12:7-109               1377           1    1.1    1.1    87.4   88.4
+          findBestWord.transformedWords.\      Processor.WordProcessor         src/Processor/WordProcessor.hs:12:45-97               1379       12972    1.1    0.0    86.2   87.3
+           getColorCountForDict                Processor.WordProcessor         src/Processor/WordProcessor.hs:(29,1)-(33,38)         1382       12972    0.0    0.0    85.1   87.3
+            getColorCountForDict.\             Processor.WordProcessor         src/Processor/WordProcessor.hs:32:5-52                1389       38916    8.0    4.8    35.6   26.7
+             compare                           Data.GameState                  src/Data/GameState.hs:4:45-47                         1401      116748    0.0    0.0     0.0    0.0
+             getColorCountForWordDiff          Processor.WordProcessor         src/Processor/WordProcessor.hs:(43,1)-(44,95)         1390       38916   26.4   22.0    27.6   22.0
+              compare                          Data.GameState                  src/Data/GameState.hs:4:45-47                         1400      292040    1.1    0.0     1.1    0.0
+              diffList                         Data.GameState                  src/Data/GameState.hs:6:31-38                         1391       38916    0.0    0.0     0.0    0.0
+            getColorCountForDict.wordDiffList  Processor.WordProcessor         src/Processor/WordProcessor.hs:30:7-64                1383       12972    0.0    0.0    49.4   60.6
+             getWordDiffListByWords            Processor.WordProcessor         src/Processor/WordProcessor.hs:37:1-54                1384       12972    1.1    2.4    49.4   60.6
+              calculateDiff                    Processor.WordProcessor         src/Processor/WordProcessor.hs:(84,1)-(87,81)         1392       38916    1.1    1.3    48.3   58.2
+               calculateDiffInner              Processor.WordProcessor         src/Processor/WordProcessor.hs:(90,1)-(102,88)        1394      233496   16.1   23.4    24.1   23.6
+                calculateDiffInner.lst         Processor.WordProcessor         src/Processor/WordProcessor.hs:93:7-19                1399      194580    3.4    0.0     3.4    0.0
+                calculateDiffInner.cnt         Processor.WordProcessor         src/Processor/WordProcessor.hs:92:7-19                1396      191574    2.3    0.0     2.3    0.0
+                isContainsAtLeastOneLetter     Processor.WordProcessor         src/Processor/WordProcessor.hs:(105,1)-(107,21)       1395      181466    2.3    0.2     2.3    0.2
+               calculateDiff.actualTransformed Processor.WordProcessor         src/Processor/WordProcessor.hs:85:7-44                1393       38916    5.7   11.9     5.7   11.9
+               calculateDiff.letterCount       Processor.WordProcessor         src/Processor/WordProcessor.hs:86:7-106               1397       38913   16.1   21.4    17.2   21.4
+                areCharsEqual                  Util.WordUtil                   src/Util/WordUtil.hs:34:1-42                          1398      194565    1.1    0.0     1.1    0.0
+       printBackExtraInfo                      Printer.CommonPrinter           src/Printer/CommonPrinter.hs:13:1-77                  1419           1    0.0    0.0     0.0    0.0
+       printComputeResult                      Printer.ComputeMenuPrinter      src/Printer/ComputeMenuPrinter.hs:(18,1)-(21,32)      1375           1    0.0    0.0     0.0    0.0
+        printWordDiffList                      Printer.WordDiffPrinter         src/Printer/WordDiffPrinter.hs:15:1-43                1407           0    0.0    0.0     0.0    0.0
+         printWordDiff                         Printer.WordDiffPrinter         src/Printer/WordDiffPrinter.hs:(7,1)-(12,16)          1409           3    0.0    0.0     0.0    0.0
+          printWordDiff.\                      Printer.WordDiffPrinter         src/Printer/WordDiffPrinter.hs:(8,34)-(11,66)         1418          15    0.0    0.0     0.0    0.0
+       getLaWordList                           Generator.WordGenerator         src/Generator/WordGenerator.hs:11:1-45                1367           0    0.0    0.0     1.1    1.4
+        getWordList                            Generator.WordGenerator         src/Generator/WordGenerator.hs:(18,1)-(20,26)         1368           0    1.1    1.4     1.1    1.4
+       getTaWordList                           Generator.WordGenerator         src/Generator/WordGenerator.hs:15:1-45                1371           0    0.0    0.0     2.3    6.4
+        getWordList                            Generator.WordGenerator         src/Generator/WordGenerator.hs:(18,1)-(20,26)         1372           0    2.3    6.4     2.3    6.4
+      loop.parseResult                         Interactor.ComputeInteractor    app/Interactor/ComputeInteractor.hs:26:9-40           1356           5    0.0    0.0     0.0    0.0
+       parse                                   Parser.ComputeMenuCommandParser src/Parser/ComputeMenuCommandParser.hs:(15,1)-(24,30) 1358           5    0.0    0.0     0.0    0.0
+        isCorrectWord                          Util.ParseUtil                  src/Util/ParseUtil.hs:(13,1)-(16,25)                  1359           3    0.0    0.0     0.0    0.0
+         isValidLength                         Util.WordUtil                   src/Util/WordUtil.hs:31:1-37                          1360           3    0.0    0.0     0.0    0.0
+         isConsistOfLetters                    Util.WordUtil                   src/Util/WordUtil.hs:28:1-32                          1362           0    0.0    0.0     0.0    0.0
+       trim                                    Util.ParseUtil                  src/Util/ParseUtil.hs:9:1-47                          1357           0    0.0    0.0     0.0    0.0
+     printExit                                 Printer.CommonPrinter           src/Printer/CommonPrinter.hs:7:1-49                   1421           0    0.0    0.0     0.0    0.0
+     printHelp                                 Printer.ComputeMenuPrinter      src/Printer/ComputeMenuPrinter.hs:(9,1)-(15,47)       1353           0    0.0    0.0     0.0    0.0
+   parse                                       Parser.MainMenuCommandParser    src/Parser/MainMenuCommandParser.hs:(6,1)-(11,17)     1347           2    0.0    0.0     0.0    0.0
+   trim                                        Util.ParseUtil                  src/Util/ParseUtil.hs:9:1-47                          1346           0    0.0    0.0     0.0    0.0
+  printExit                                    Printer.MainMenuPrinter         src/Printer/MainMenuPrinter.hs:16:1-54                1423           0    0.0    0.0     0.0    0.0
+  printHelp                                    Printer.MainMenuPrinter         src/Printer/MainMenuPrinter.hs:(8,1)-(13,40)          1342           0    0.0    0.0     0.0    0.0
+  printWelcomeMessage                          Printer.MainMenuPrinter         src/Printer/MainMenuPrinter.hs:5:1-62                 1340           0    0.0    0.0     0.0    0.0
